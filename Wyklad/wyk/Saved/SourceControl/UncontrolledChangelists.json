@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/Maps/Tes.umap",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/BP_GameMode.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/BP_Player.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/BP_PlayerController.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/Input/IA_Movement.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/Input/IMC_Player.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/Input/IA_Look.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/Blueprints/Components/BP_Item_Pickup_Box.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/Blueprints/BP_Item_Pickup_Box.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/Input/IA_Interact.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/BP_DA_ItemType.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/DA_Gun.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/DA_Gun2.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/BP_DA_Item.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/BPS_ItemPair.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/DT_Items.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/DA_Item_Pickup_Box.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/BP_Item_Instance.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/Blueprints/Components/BP_AC_Player_Inventory.uasset",
+				"C:/Foxim/Nauka/Wyklad/wyk/Content/enum.uasset"
+			]
+		}
+	]
+}
