@@ -5,6 +5,9 @@
 			"guid": "00000000000000000000000000000000",
 			"description": "Default Uncontrolled Changelist",
 			"files": [
+				"C:/Foxim/Dev/lecture/Wyklad/wyk/Content/DA_Item_Pickup_Box.uasset",
+				"C:/Foxim/Dev/lecture/Wyklad/wyk/Content/Blueprints/Components/BP_AC_Player_Inventory.uasset",
+				"C:/Foxim/Dev/lecture/Wyklad/wyk/Content/BP_Item_Instance.uasset",
 				"C:/Foxim/Nauka/Wyklad/wyk/Content/Maps/Tes.umap",
 				"C:/Foxim/Nauka/Wyklad/wyk/Content/BP_GameMode.uasset",
 				"C:/Foxim/Nauka/Wyklad/wyk/Content/BP_Player.uasset",
