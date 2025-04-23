@@ -7,11 +7,28 @@
 #include "Components/ActorComponent.h"
 #include "InventoryComponent.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
+struct FItemCoordinates
+{
+public:
+	GENERATED_BODY()
+
+	FItemCoordinates() = default;
+	FItemCoordinates(uint32_t X, uint32_t Y) : X(X), Y(Y){};
+
+	UPROPERTY(EditAnywhere)
+	uint32 X;
+
+	UPROPERTY(EditAnywhere)
+	uint32 Y;
+};
+
+USTRUCT(BlueprintType)
 struct FItem2DArray{
 	GENERATED_BODY()
 public:
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	TArray<int32> Ar;
 
 	int32& operator[] (int32 i) {
@@ -46,14 +63,15 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-	FVector2D GetFirstFreeSlot(FVector2D ItemSize);
+	bool GetFirstFreeSlot(FItemCoordinates ItemSize, FItemCoordinates& OutFoundCoordinates);
 
 	UFUNCTION(BlueprintCallable)
-	void SetItemInstanceAtPosition(UItemInstance* ItemInstance, FVector2D NewPosition);
+	void SetItemInstanceAtPosition(UItemInstance* ItemInstance, FItemCoordinates NewPosition, FItemCoordinates ItemSize);
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FVector2D InventorySize;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<FItem2DArray> ItemArray;
 
 	UPROPERTY(BlueprintReadOnly)

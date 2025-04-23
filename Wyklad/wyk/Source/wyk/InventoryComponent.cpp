@@ -35,16 +35,16 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	// ...
 }
 
-bool CanInsert(TArray<FItem2DArray>& Items, int32 x, int32 y, FVector2d size)
+bool CanInsert(TArray<FItem2DArray>& Items, int32 x, int32 y, FItemCoordinates size)
 {
-	for (int lx = 0; lx < size.X; lx++)
+	for (uint32 lx = 0; lx < size.X; lx++)
 	{
-		for (int ly = 0; ly < size.Y; ly++)
+		for (uint32 ly = 0; ly < size.Y; ly++)
 		{
 			int nx = lx + x;
 			int ny = ly + y;
 
-			if (Items[x][y] != -1)
+			if (Items[nx][ny] != -1)
 				return false;
 		}
 	}
@@ -52,25 +52,50 @@ bool CanInsert(TArray<FItem2DArray>& Items, int32 x, int32 y, FVector2d size)
 	return true;
 }
 
-FVector2D UInventoryComponent::GetFirstFreeSlot(FVector2D ItemSize)
+bool UInventoryComponent::GetFirstFreeSlot(FItemCoordinates ItemSize, FItemCoordinates& OutFoundCoordinates)
 {
 	for (int x = 0; x < InventorySize.X - ItemSize.X; x++)
 	{
 		for (int y = 0; y < InventorySize.Y - ItemSize.Y; y++)
 		{
-			if (ItemArray[x][y] == -1)
+			if (ItemArray[x][y] != -1)
 				continue;
 
 			if (CanInsert(ItemArray,x,y,ItemSize))
-				return FVector2D(x,y);
+			{
+				OutFoundCoordinates = FItemCoordinates(x,y);
+				return true;
+			}
+			
 		}
 	}
 	
-	return FVector2D(-1,-1);
+	return false;
 }
 
-void UInventoryComponent::SetItemInstanceAtPosition(UItemInstance* ItemInstance, FVector2D NewPosition)
+void UInventoryComponent::SetItemInstanceAtPosition(UItemInstance* ItemInstance, FItemCoordinates NewPosition, FItemCoordinates ItemSize)
 {
-	ItemArray[NewPosition.X][NewPosition.Y] = Items.Find(ItemInstance);
+	if (!ItemInstance)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Item instance was null"));
+		return;
+	}
+
+	auto ItemSearchResult = Items.Find(ItemInstance);
+
+
+	if (ItemSearchResult == -1)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Item was not found in Items array"));
+		return;
+	}
+
+	for (uint32 x = NewPosition.X; x < ItemSize.X + NewPosition.X; x++)
+	{
+		for (uint32 y = NewPosition.Y; y < ItemSize.Y + NewPosition.Y; y++)
+		{
+			ItemArray[x][y] = ItemSearchResult;
+		}
+	}
 }
 
