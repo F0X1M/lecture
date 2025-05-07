@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ItemType.h"
 
 #include "ItemInstance.generated.h"
 
@@ -14,4 +15,17 @@ class WYK_API UItemInstance : public UObject
 {
 public:
 	GENERATED_BODY()
+
+	/** Please add a variable description */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Default")
+	double Durability;
+
+	/** Please add a variable description */
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category="Default")
+	FItemCoordinates PositionInEquipment;
+
+	/** Please add a variable description */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Default")
+	TObjectPtr<UItemType> ItemData;
+
 };

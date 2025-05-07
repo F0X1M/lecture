@@ -53,7 +53,7 @@ bool CanInsert(TArray<FItem2DArray>& Items, int32 x, int32 y, FItemCoordinates s
 }
 
 bool UInventoryComponent::GetFirstFreeSlot(FItemCoordinates ItemSize, FItemCoordinates& OutFoundCoordinates)
-{
+	{
 	for (int x = 0; x < InventorySize.X - ItemSize.X; x++)
 	{
 		for (int y = 0; y < InventorySize.Y - ItemSize.Y; y++)
@@ -73,29 +73,50 @@ bool UInventoryComponent::GetFirstFreeSlot(FItemCoordinates ItemSize, FItemCoord
 	return false;
 }
 
-void UInventoryComponent::SetItemInstanceAtPosition(UItemInstance* ItemInstance, FItemCoordinates NewPosition, FItemCoordinates ItemSize)
+void UInventoryComponent::SetItemInstanceAtPosition(int32 Index, FItemCoordinates NewPosition, FItemCoordinates ItemSize)
 {
-	if (!ItemInstance)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Item instance was null"));
-		return;
-	}
-
-	auto ItemSearchResult = Items.Find(ItemInstance);
-
-
-	if (ItemSearchResult == -1)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Item was not found in Items array"));
-		return;
-	}
-
 	for (uint32 x = NewPosition.X; x < ItemSize.X + NewPosition.X; x++)
 	{
 		for (uint32 y = NewPosition.Y; y < ItemSize.Y + NewPosition.Y; y++)
 		{
-			ItemArray[x][y] = ItemSearchResult;
+			ItemArray[x][y] = Index;
 		}
 	}
+}
+
+void UInventoryComponent::AddItem_Native(UItemType* ItemType)
+{
+	auto inst = NewObject<UItemInstance>(GetOuter(), ItemType->ItemInstanceClass);
+	AddItemInstance_Native(inst);
+}
+
+void UInventoryComponent::AddItemInstance_Native(UItemInstance* ItemInstance)
+{
+	FItemCoordinates FoundCoords;
+	if (!GetFirstFreeSlot(ItemInstance->ItemData->InventorySize, FoundCoords))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Couldnt add item"));
+		return;
+	}
+
+	auto idx = Items.Add(ItemInstance);
+	ItemInstance->PositionInEquipment = FoundCoords;
+	SetItemInstanceAtPosition(idx, ItemInstance->PositionInEquipment, ItemInstance->ItemData->InventorySize);
+}
+
+UItemInstance* UInventoryComponent::RemoveItemInstance_Native(UItemInstance* ItemInstance)
+{
+	if (!ItemInstance)
+		return nullptr;
+	
+	// TODO: fix
+	this->Items.Remove(ItemInstance);
+	SetItemInstanceAtPosition(-1, ItemInstance->PositionInEquipment, ItemInstance->ItemData->InventorySize);
+	return nullptr;
+}
+
+void UInventoryComponent::DropItemInstance_Native(UItemInstance* ItemInstance)
+{
+	
 }
 

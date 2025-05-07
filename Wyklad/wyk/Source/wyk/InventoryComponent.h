@@ -7,21 +7,6 @@
 #include "Components/ActorComponent.h"
 #include "InventoryComponent.generated.h"
 
-USTRUCT(BlueprintType)
-struct FItemCoordinates
-{
-public:
-	GENERATED_BODY()
-
-	FItemCoordinates() = default;
-	FItemCoordinates(uint32_t X, uint32_t Y) : X(X), Y(Y){};
-
-	UPROPERTY(EditAnywhere)
-	uint32 X;
-
-	UPROPERTY(EditAnywhere)
-	uint32 Y;
-};
 
 USTRUCT(BlueprintType)
 struct FItem2DArray{
@@ -66,7 +51,19 @@ public:
 	bool GetFirstFreeSlot(FItemCoordinates ItemSize, FItemCoordinates& OutFoundCoordinates);
 
 	UFUNCTION(BlueprintCallable)
-	void SetItemInstanceAtPosition(UItemInstance* ItemInstance, FItemCoordinates NewPosition, FItemCoordinates ItemSize);
+	void SetItemInstanceAtPosition(int32 Index, FItemCoordinates NewPosition, FItemCoordinates ItemSize);
+
+	UFUNCTION(BlueprintCallable)
+	void AddItem_Native(UItemType* ItemType);
+
+	UFUNCTION(BlueprintCallable)
+	void AddItemInstance_Native(UItemInstance* ItemInstance);
+	
+	UFUNCTION(BlueprintCallable)
+	UItemInstance* RemoveItemInstance_Native(UItemInstance* ItemInstance);
+
+	UFUNCTION(BlueprintCallable)
+	void DropItemInstance_Native(UItemInstance* ItemInstance);
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FVector2D InventorySize;
