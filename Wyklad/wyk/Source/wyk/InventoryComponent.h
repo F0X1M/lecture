@@ -71,7 +71,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<FItem2DArray> ItemArray;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 	TArray<TObjectPtr<UItemInstance>> Items;
 
 };
