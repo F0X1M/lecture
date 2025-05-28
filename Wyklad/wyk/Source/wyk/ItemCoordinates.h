@@ -9,11 +9,11 @@ public:
 	GENERATED_BODY()
 
 	FItemCoordinates() = default;
-	FItemCoordinates(uint32_t X, uint32_t Y) : X(X), Y(Y){};
+	FItemCoordinates(int X, int Y) : X(X), Y(Y){};
 
-	UPROPERTY(EditAnywhere)
-	uint32 X;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int X;
 
-	UPROPERTY(EditAnywhere)
-	uint32 Y;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int Y;
 };

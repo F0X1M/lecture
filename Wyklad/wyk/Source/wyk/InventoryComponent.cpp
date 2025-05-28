@@ -35,11 +35,11 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	// ...
 }
 
-bool CanInsert(TArray<FItem2DArray>& Items, int32 x, int32 y, FItemCoordinates size)
+bool CanInsert(TArray<FItem2DArray>& Items, int x, int y, FItemCoordinates size)
 {
-	for (uint32 lx = 0; lx < size.X; lx++)
+	for (int ly = 0; ly < size.Y; ly++)
 	{
-		for (uint32 ly = 0; ly < size.Y; ly++)
+		for (int lx = 0; lx < size.X; lx++)
 		{
 			int nx = lx + x;
 			int ny = ly + y;
@@ -53,10 +53,10 @@ bool CanInsert(TArray<FItem2DArray>& Items, int32 x, int32 y, FItemCoordinates s
 }
 
 bool UInventoryComponent::GetFirstFreeSlot(FItemCoordinates ItemSize, FItemCoordinates& OutFoundCoordinates)
+{
+	for (int y = 0; y < InventorySize.Y - ItemSize.Y; y++)
 	{
-	for (int x = 0; x < InventorySize.X - ItemSize.X; x++)
-	{
-		for (int y = 0; y < InventorySize.Y - ItemSize.Y; y++)
+		for (int x = 0; x < InventorySize.X - ItemSize.X; x++)
 		{
 			if (ItemArray[x][y] != -1)
 				continue;
@@ -75,9 +75,9 @@ bool UInventoryComponent::GetFirstFreeSlot(FItemCoordinates ItemSize, FItemCoord
 
 void UInventoryComponent::SetItemInstanceAtPosition(int32 Index, FItemCoordinates NewPosition, FItemCoordinates ItemSize)
 {
-	for (uint32 x = NewPosition.X; x < ItemSize.X + NewPosition.X; x++)
+	for (int y = NewPosition.Y; y < ItemSize.Y + NewPosition.Y; y++)
 	{
-		for (uint32 y = NewPosition.Y; y < ItemSize.Y + NewPosition.Y; y++)
+		for (int x = NewPosition.X; x < ItemSize.X + NewPosition.X; x++)
 		{
 			ItemArray[x][y] = Index;
 		}
