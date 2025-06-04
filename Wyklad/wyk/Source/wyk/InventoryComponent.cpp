@@ -54,9 +54,9 @@ bool CanInsert(TArray<FItem2DArray>& Items, int x, int y, FItemCoordinates size)
 
 bool UInventoryComponent::GetFirstFreeSlot(FItemCoordinates ItemSize, FItemCoordinates& OutFoundCoordinates)
 {
-	for (int y = 0; y < InventorySize.Y - ItemSize.Y; y++)
+	for (int y = 0; y < InventorySize.Y - ItemSize.Y + 1; y++)
 	{
-		for (int x = 0; x < InventorySize.X - ItemSize.X; x++)
+		for (int x = 0; x < InventorySize.X - ItemSize.X + 1; x++)
 		{
 			if (ItemArray[x][y] != -1)
 				continue;
@@ -84,24 +84,27 @@ void UInventoryComponent::SetItemInstanceAtPosition(int32 Index, FItemCoordinate
 	}
 }
 
-void UInventoryComponent::AddItem_Native(UItemType* ItemType)
+bool UInventoryComponent::AddItem_Native(UItemType* ItemType)
 {
 	auto inst = NewObject<UItemInstance>(GetOuter(), ItemType->ItemInstanceClass);
-	AddItemInstance_Native(inst);
+	return AddItemInstance_Native(inst);
 }
 
-void UInventoryComponent::AddItemInstance_Native(UItemInstance* ItemInstance)
+bool UInventoryComponent::AddItemInstance_Native(UItemInstance* ItemInstance)
 {
 	FItemCoordinates FoundCoords;
 	if (!GetFirstFreeSlot(ItemInstance->ItemData->InventorySize, FoundCoords))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Couldnt add item"));
-		return;
+		return false;
 	}
 
 	auto idx = Items.Add(ItemInstance);
 	ItemInstance->PositionInEquipment = FoundCoords;
 	SetItemInstanceAtPosition(idx, ItemInstance->PositionInEquipment, ItemInstance->ItemData->InventorySize);
+
+	OnItemPickedUp.Broadcast();
+	return true;
 }
 
 UItemInstance* UInventoryComponent::RemoveItemInstance_Native(UItemInstance* ItemInstance)

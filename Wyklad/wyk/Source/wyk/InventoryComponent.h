@@ -30,6 +30,8 @@ public:
 	}
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnItemPickedUp);
+
 UCLASS(Blueprintable)
 class WYK_API UInventoryComponent : public UActorComponent
 {
@@ -54,10 +56,10 @@ public:
 	void SetItemInstanceAtPosition(int32 Index, FItemCoordinates NewPosition, FItemCoordinates ItemSize);
 
 	UFUNCTION(BlueprintCallable)
-	void AddItem_Native(UItemType* ItemType);
+	bool AddItem_Native(UItemType* ItemType);
 
 	UFUNCTION(BlueprintCallable)
-	void AddItemInstance_Native(UItemInstance* ItemInstance);
+	bool AddItemInstance_Native(UItemInstance* ItemInstance);
 	
 	UFUNCTION(BlueprintCallable)
 	UItemInstance* RemoveItemInstance_Native(UItemInstance* ItemInstance);
@@ -74,4 +76,6 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	TArray<TObjectPtr<UItemInstance>> Items;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnItemPickedUp OnItemPickedUp;
 };
