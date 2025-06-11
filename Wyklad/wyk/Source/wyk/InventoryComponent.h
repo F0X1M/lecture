@@ -56,6 +56,9 @@ public:
 	void SetItemInstanceAtPosition(int32 Index, FItemCoordinates NewPosition, FItemCoordinates ItemSize);
 
 	UFUNCTION(BlueprintCallable)
+	UItemInstance* GetItemInstanceAtPosition(FItemCoordinates Coordinates);
+	
+	UFUNCTION(BlueprintCallable)
 	bool AddItem_Native(UItemType* ItemType);
 
 	UFUNCTION(BlueprintCallable)

@@ -84,6 +84,11 @@ void UInventoryComponent::SetItemInstanceAtPosition(int32 Index, FItemCoordinate
 	}
 }
 
+UItemInstance* UInventoryComponent::GetItemInstanceAtPosition(FItemCoordinates Coordinates)
+{
+	return Items[ItemArray[Coordinates.Y][Coordinates.X]];
+}
+
 bool UInventoryComponent::AddItem_Native(UItemType* ItemType)
 {
 	auto inst = NewObject<UItemInstance>(GetOuter(), ItemType->ItemInstanceClass);
